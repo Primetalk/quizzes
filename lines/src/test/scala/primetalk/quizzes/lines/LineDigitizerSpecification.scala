@@ -27,20 +27,25 @@ object Lines {
 
     def length = vector.norm
 
-    /** A function that calculates a point on the line.*/
+    /** A function that calculates a point on the line. */
     def parametric(t: Double): Point3dDouble =
       line.s + (t *: vector)
 
   }
 
-  /**
-    * A digitizer should return the sequence of cubic cells 1x1x1 that are
-    * crossed by the line.
-    * The following properties should be met:
-    * - for any point on the line there should be a cell in the sequence
-    * - all cells should be distinct
-    * - the neighbour cells should be adjacent
-    */
+}
+/**
+  * A digitizer should return the sequence of cubic cells 1x1x1 that are
+  * crossed by the line.
+  * The following properties should be met:
+  * - for any point on the line there should be a cell in the sequence
+  * - all cells should be distinct
+  * - the neighbour cells should be adjacent
+  *
+  * An example of digitizer is given.
+  */
+object LineDigitizer{
+  import Lines._
   type Digitizer = Line => Seq[Point3dInt]
 
   /** An example digitizer that doesn't return all the cells.
@@ -63,9 +68,10 @@ object Lines {
   def solutionDigitizer: Digitizer = ???
 }
 
-object LinesSpecification extends Properties("Digitizer") {
+object LineDigitizerSpecification extends Properties("Digitizer") {
 
   import Lines._
+  import LineDigitizer._
 
   val coordGen = Gen.choose(-10.0, 10.0)
   val pointGen = for {
